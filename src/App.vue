@@ -7,6 +7,7 @@
 <script>
 import Events from './components/Events.vue'
 
+
 export default {
   name: 'app',
   components: {

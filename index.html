@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue.page</title>
+    <script src="vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+</head>
+<body>
+<div id="app">
+    <div class="events">
+        <ul>
+            <li v-for="event in users">
+                <button v-on:click="selected(event.id)">submit</button>
+                {{event.name}}
+            </li>
+        </ul>
+        <button v-on:click="next">next</button>
+        <footer>
+            footer: For guide and {{ message }} on how to
+        </footer>
+    </div>
+</div>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            users: [],
+            events: [{id: 2423423, name: 'party'}, {id: 5345463, name: 'conference'}, {
+                id: 47363433,
+                name: 'concert'
+            }]
+        },
+        created: function() {
+            console.log('created vue');
+            this.$http.get('http://jsonplaceholder.typicode.com/users').then(response => {
+                // get body data
+                this.users = response.body;
+                console.log(this.users);
+            }, response => {
+                // error callback
+            });
+        },
+        methods: {
+            selected: function(id){
+                console.log(id);
+            },
+            next: function () {
+                console.log('ok');
+                this.evbar();
+            },
+            evbar: function(){}
+        }
+    })
+</script>
+</body>
+</html>
