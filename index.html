@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>vue.page</title>
+    <title>vuevents</title>
     <script src="vue.js"></script>
     <script src="vue-resource"></script>
 </head>
@@ -19,6 +19,9 @@
         <div v-for="event in events">
             <button v-on:click="like(event.id)">like</button>
             <button v-on:click="stop(event.id)">stop</button>
+            <a v-bind:href="'https://www.facebook.com/events/'+event.id" target="_blank">
+                {{event.start_time.substring(11,16)}}</a>
+            <!--<span>{{event.start_time.substring(11,16)}}</span>-->
             <span v-bind:title="event.description">{{event.name}}</span>
         </div>
         <button v-on:click="next">next</button>
@@ -71,6 +74,9 @@
                 var nextDay = new Date();
                 nextDay.setDate(day.getDate()-1);
                 this.datestr = nextDay.toJSON().slice(0, 10)
+            },
+            like: function (id) {
+                console.log(id);
             },
             evbar: function () {
             }
