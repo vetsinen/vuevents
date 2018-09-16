@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>vue.page</title>
     <script src="vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <script src="vue-resource"></script>
 </head>
 <body>
 <div id="app">
@@ -34,8 +34,9 @@
         },
         created: function() {
             console.log('created vue');
-            this.$http.get('http://jsonplaceholder.typicode.com/users').then(response => {
-                // get body data
+            //this.$http.get('http://jsonplaceholder.typicode.com/users').then(response => {
+            this.$http.get('http://127.0.01:5000/events').then(response => {
+                        // get body data
                 this.users = response.body;
                 console.log(this.users);
             }, response => {
