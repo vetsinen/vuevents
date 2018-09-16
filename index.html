@@ -9,12 +9,18 @@
 <body>
 <div id="app">
     <div class="events">
-        <ul>
-            <li v-for="event in users">
-                <button v-on:click="selected(event.id)">submit</button>
-                {{event.name}}
-            </li>
-        </ul>
+        <div class="date-selector">
+                <label for="date">events for:</label>
+                <input type="date" id="date" name="date" v-model="datestr"
+                       min="2018-01-01" max="2018-12-31" />
+            <button>prev</button>
+            <button>next</button>
+        </div>
+        <div v-for="event in users">
+            <button v-on:click="like(event.id)">like</button>
+            <button v-on:click="stop(event.id)">stop</button>
+            <span v-bind:title="event.description">{{event.name}}</span>
+        </div>
         <button v-on:click="next">next</button>
         <footer>
             footer: For guide and {{ message }} on how to
@@ -26,17 +32,18 @@
         el: '#app',
         data: {
             message: 'Hello Vue!',
+            datestr: utc = new Date().toJSON().slice(0, 10),
             users: [],
             events: [{id: 2423423, name: 'party'}, {id: 5345463, name: 'conference'}, {
                 id: 47363433,
                 name: 'concert'
             }]
         },
-        created: function() {
+        created: function () {
             console.log('created vue');
             //this.$http.get('http://jsonplaceholder.typicode.com/users').then(response => {
             this.$http.get('http://127.0.01:5000/events').then(response => {
-                        // get body data
+                // get body data
                 this.users = response.body;
                 console.log(this.users);
             }, response => {
@@ -44,14 +51,20 @@
             });
         },
         methods: {
-            selected: function(id){
+            selected: function (id) {
                 console.log(id);
             },
             next: function () {
                 console.log('ok');
                 this.evbar();
             },
-            evbar: function(){}
+            evbar: function () {
+            }
+        },
+        watch: {
+            datestr: function () {
+                console.log('datestr changed');
+            }
         }
     })
 </script>
