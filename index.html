@@ -13,8 +13,8 @@
             <label for="date">events for:</label>
             <input type="date" id="date" name="date" v-model="datestr"
                    min="2018-01-01" max="2018-12-31"/>
-            <button>prev</button>
-            <button>next</button>
+            <button v-on:click="prev">prev</button>
+            <button v-on:click="next">next</button>
         </div>
         <div v-for="event in events">
             <button v-on:click="like(event.id)">like</button>
@@ -61,8 +61,16 @@
                 });
             },
             next: function () {
-                console.log('ok');
-                this.evbar();
+                var day = new Date(this.datestr);
+                var nextDay = new Date();
+                nextDay.setDate(day.getDate()+1);
+                this.datestr = nextDay.toJSON().slice(0, 10)
+            },
+            prev: function () {
+                var day = new Date(this.datestr);
+                var nextDay = new Date();
+                nextDay.setDate(day.getDate()-1);
+                this.datestr = nextDay.toJSON().slice(0, 10)
             },
             evbar: function () {
             }
