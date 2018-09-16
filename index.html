@@ -10,13 +10,13 @@
 <div id="app">
     <div class="events">
         <div class="date-selector">
-                <label for="date">events for:</label>
-                <input type="date" id="date" name="date" v-model="datestr"
-                       min="2018-01-01" max="2018-12-31" />
+            <label for="date">events for:</label>
+            <input type="date" id="date" name="date" v-model="datestr"
+                   min="2018-01-01" max="2018-12-31"/>
             <button>prev</button>
             <button>next</button>
         </div>
-        <div v-for="event in users">
+        <div v-for="event in events">
             <button v-on:click="like(event.id)">like</button>
             <button v-on:click="stop(event.id)">stop</button>
             <span v-bind:title="event.description">{{event.name}}</span>
@@ -44,8 +44,7 @@
             //this.$http.get('http://jsonplaceholder.typicode.com/users').then(response => {
             this.$http.get('http://127.0.01:5000/events').then(response => {
                 // get body data
-                this.users = response.body;
-                console.log(this.users);
+                this.events = response.body;
             }, response => {
                 // error callback
             });
@@ -53,6 +52,13 @@
         methods: {
             selected: function (id) {
                 console.log(id);
+            },
+            getevents: function () {
+                this.$http.get('http://127.0.01:5000/events/'+this.datestr).then(response => {
+                    this.events = response.body;
+                }, response => {
+                    // error callback
+                });
             },
             next: function () {
                 console.log('ok');
@@ -63,7 +69,7 @@
         },
         watch: {
             datestr: function () {
-                console.log('datestr changed');
+                this.getevents();
             }
         }
     })
