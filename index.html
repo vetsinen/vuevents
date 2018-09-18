@@ -45,7 +45,7 @@
         created: function () {
             console.log('created vue');
             //this.$http.get('http://jsonplaceholder.typicode.com/users').then(response => {
-            this.$http.get('http://127.0.01:5000/events').then(response => {
+            this.$http.get('https://damp-peak-30854.herokuapp.com/events').then(response => {
                 // get body data
                 this.events = response.body;
             }, response => {
@@ -57,7 +57,7 @@
                 console.log(id);
             },
             getevents: function () {
-                this.$http.get('http://127.0.01:5000/events/'+this.datestr).then(response => {
+                this.$http.get('https://damp-peak-30854.herokuapp.com/events/'+this.datestr).then(response => {
                     this.events = response.body;
                 }, response => {
                     // error callback
